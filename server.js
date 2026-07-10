@@ -481,7 +481,10 @@ try{
 
     await Jimp.read(filePath);
 
-
+image.resize(
+    512,
+    Jimp.AUTO
+);
 
 
 
@@ -594,18 +597,6 @@ try{
 
 
 });
-
-
-
-
-
-
-
-
-
-// ===============================
-// Start Server
-// ===============================
 
 
 app.listen(PORT,()=>{
