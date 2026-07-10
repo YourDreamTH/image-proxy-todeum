@@ -1,0 +1,23 @@
+{
+  "name": "image-proxy",
+  "version": "1.0.0",
+  "description": "Image Proxy | โต๊ะเดิม - Roblox EditableImage Converter",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "roblox",
+    "editableimage",
+    "image-proxy",
+    "todeum"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "jimp": "^0.22.12",
+    "multer": "^2.2.0"
+  }
+}

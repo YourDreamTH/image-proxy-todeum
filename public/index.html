@@ -1,0 +1,967 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Image Proxy | โต๊ะเดิม</title>
+<link rel="icon" type="image/png" href="/logo.png">
+
+<style>
+
+*,
+*::before,
+*::after{
+
+    box-sizing:border-box;
+
+}
+
+
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    padding:20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    background:
+    radial-gradient(
+        circle at top,
+        #303060,
+        #08080d 65%
+    );
+
+
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+
+
+
+.card{
+
+    width:100%;
+
+    max-width:500px;
+
+    padding:40px;
+
+
+    background:
+    rgba(255,255,255,.08);
+
+
+    border:
+    1px solid rgba(255,255,255,.15);
+
+
+    backdrop-filter:blur(20px);
+
+
+    border-radius:28px;
+
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,.5);
+
+
+}
+
+
+
+
+
+
+
+/* =================
+      LOGO
+================= */
+
+
+.logo{
+    width:80px;
+    height:80px;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    border-radius:25px;
+}
+
+
+
+.logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+
+
+
+
+
+
+h1{
+
+
+    text-align:center;
+
+
+    margin:20px 0 10px;
+
+
+    font-size:32px;
+
+
+}
+
+
+
+
+
+.subtitle{
+
+
+    text-align:center;
+
+
+    color:#aaa;
+
+
+    line-height:1.6;
+
+
+}
+
+
+
+
+
+
+
+/* Upload */
+
+
+.upload{
+
+
+    display:block;
+
+
+    width:100%;
+
+
+    margin-top:30px;
+
+
+    padding:30px 15px;
+
+
+    text-align:center;
+
+
+    border:
+
+    2px dashed rgba(255,255,255,.3);
+
+
+    border-radius:22px;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+    overflow:hidden;
+
+
+}
+
+
+
+.upload:hover,
+.upload.drag{
+
+
+    border-color:#5865F2;
+
+
+    background:
+    rgba(88,101,242,.15);
+
+
+}
+
+
+
+.icon{
+
+    font-size:45px;
+
+}
+
+
+
+
+.upload h3{
+
+    margin:15px 0 5px;
+
+}
+
+
+
+.upload span{
+
+    color:#aaa;
+
+    font-size:14px;
+
+}
+
+
+
+input{
+
+    display:none;
+
+}
+
+
+
+
+
+
+
+/* Preview */
+
+
+#imageBox{
+
+    display:none;
+
+}
+
+
+
+#imagePreview{
+
+
+    width:100%;
+
+
+    max-height:250px;
+
+
+    object-fit:contain;
+
+
+    border-radius:18px;
+
+
+}
+
+
+
+
+
+#removeBtn{
+
+
+    width:auto;
+
+
+    margin-top:15px;
+
+
+    padding:10px 20px;
+
+
+    background:#ef4444;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+
+
+#removeBtn:hover{
+
+
+    background:#dc2626;
+
+
+    transform:none;
+
+
+}
+
+
+
+
+
+
+
+.info{
+
+
+    margin-top:15px;
+
+
+    text-align:center;
+
+
+    color:#aaa;
+
+
+    font-size:14px;
+
+
+    word-break:break-word;
+
+
+}
+
+
+
+
+
+
+
+
+button{
+
+
+    width:100%;
+
+
+    margin-top:25px;
+
+
+    padding:15px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    color:white;
+
+
+    font-size:16px;
+
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #5865F2,
+        #8b5cf6
+    );
+
+
+}
+
+
+
+button:hover{
+
+
+    transform:translateY(-3px);
+
+
+}
+
+
+
+button:disabled{
+
+
+    opacity:.5;
+
+
+}
+
+
+
+
+
+
+
+.result{
+
+
+    display:none;
+
+
+    margin-top:25px;
+
+
+    padding:20px;
+
+
+    background:
+
+    rgba(0,0,0,.3);
+
+
+    border-radius:15px;
+
+
+}
+
+
+
+
+
+.url{
+
+
+    color:#aaa;
+
+
+    font-size:13px;
+
+
+    word-break:break-all;
+
+
+}
+
+
+
+
+
+.copy{
+
+
+    background:#22c55e;
+
+
+}
+
+
+
+
+
+
+
+.footer{
+
+
+    text-align:center;
+
+
+    margin-top:25px;
+
+
+    font-size:12px;
+
+
+    color:#777;
+
+
+}
+
+
+
+
+
+
+
+
+@media(max-width:600px){
+
+
+    .card{
+
+
+        padding:25px 20px;
+
+
+    }
+
+
+
+    h1{
+
+
+        font-size:25px;
+
+
+    }
+
+
+
+    .logo{
+
+
+        width:80px;
+
+
+        height:80px;
+
+
+    }
+
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+
+<div class="logo">
+
+<img src="/image/logo.png" alt="Logo">
+
+</div>
+
+
+
+
+<h1>
+Image Proxy For โต๊ะเดิม
+</h1>
+
+
+
+<div class="subtitle">
+
+Roblox EditableImage Converter
+
+<br>
+
+โต๊ะเดิม Creator Tool
+
+</div>
+
+
+
+
+
+
+<label class="upload" id="drop">
+
+
+<div id="uploadContent">
+
+
+<div class="icon">
+☁️
+</div>
+
+
+<h3>
+Upload Image
+</h3>
+
+
+<span>
+PNG / JPG / WEBP
+</span>
+
+
+</div>
+
+
+
+
+
+<div id="imageBox">
+
+
+<img id="imagePreview">
+
+
+<button 
+type="button"
+id="removeBtn">
+
+✕ Remove
+
+</button>
+
+
+</div>
+
+
+
+
+
+<input
+id="file"
+type="file"
+accept="image/*"
+>
+
+
+</label>
+
+
+
+
+
+
+
+<div class="info" id="info">
+
+No image selected
+
+</div>
+
+
+
+
+
+<button id="uploadBtn">
+
+Generate Roblox URL
+
+</button>
+
+
+
+
+
+
+<div class="result" id="result">
+
+
+<h3>
+✅ Completed
+</h3>
+
+
+
+<div class="url" id="url"></div>
+
+
+
+<button class="copy" id="copy">
+
+Copy Roblox Link
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="footer">
+
+Node.js + Jimp + Roblox EditableImage
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+const fileInput=document.getElementById("file");
+
+const drop=document.getElementById("drop");
+
+const uploadContent=document.getElementById("uploadContent");
+
+const imageBox=document.getElementById("imageBox");
+
+const imagePreview=document.getElementById("imagePreview");
+
+const removeBtn=document.getElementById("removeBtn");
+
+const info=document.getElementById("info");
+
+const uploadBtn=document.getElementById("uploadBtn");
+
+const result=document.getElementById("result");
+
+const urlBox=document.getElementById("url");
+
+const copyBtn=document.getElementById("copy");
+
+
+let selectedFile=null;
+
+let generatedURL="";
+
+
+
+
+
+drop.onclick=()=>{
+
+fileInput.click();
+
+};
+
+
+
+fileInput.onchange=(e)=>{
+
+setFile(e.target.files[0]);
+
+};
+
+
+
+
+
+function setFile(file){
+
+
+if(!file)return;
+
+
+selectedFile=file;
+
+
+imagePreview.src=
+URL.createObjectURL(file);
+
+
+uploadContent.style.display="none";
+
+imageBox.style.display="block";
+
+
+info.innerHTML=
+`${file.name}<br>${(file.size/1024).toFixed(1)} KB`;
+
+}
+
+
+
+
+
+removeBtn.onclick=(e)=>{
+
+
+e.preventDefault();
+
+
+selectedFile=null;
+
+
+fileInput.value="";
+
+
+imageBox.style.display="none";
+
+
+uploadContent.style.display="block";
+
+
+info.innerHTML="No image selected";
+
+
+};
+
+
+
+
+
+drop.ondragover=(e)=>{
+
+e.preventDefault();
+
+drop.classList.add("drag");
+
+};
+
+
+
+drop.ondragleave=()=>{
+
+drop.classList.remove("drag");
+
+};
+
+
+
+drop.ondrop=(e)=>{
+
+
+e.preventDefault();
+
+
+drop.classList.remove("drag");
+
+
+setFile(
+e.dataTransfer.files[0]
+);
+
+
+};
+
+
+
+
+
+
+
+uploadBtn.onclick=async()=>{
+
+
+if(!selectedFile){
+
+alert("Please select image");
+
+return;
+
+}
+
+
+uploadBtn.disabled=true;
+
+uploadBtn.innerHTML="Uploading...";
+
+
+
+try{
+
+
+const form=new FormData();
+
+
+form.append(
+"image",
+selectedFile
+);
+
+
+
+const res=await fetch(
+"/upload",
+{
+
+method:"POST",
+
+body:form
+
+});
+
+
+
+const data=await res.json();
+
+
+
+generatedURL=
+location.origin+
+data.url;
+
+
+
+urlBox.innerHTML=
+generatedURL;
+
+
+result.style.display="block";
+
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+
+
+uploadBtn.disabled=false;
+
+uploadBtn.innerHTML=
+"Generate Roblox URL";
+
+
+};
+
+
+
+
+
+
+copyBtn.onclick=()=>{
+
+
+navigator.clipboard.writeText(
+generatedURL
+);
+
+
+alert("Copied!");
+
+};
+
+
+
+</script>
+
+
+</body>
+
+</html>
+
